@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ac4_display_problem_set.DisplayQuestionActivity">
+
+
+    <AdapterViewFlipper
+        android:id="@+id/question_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+         />
+
+
+    <!-- bottom Toolbar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/progress_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:elevation="@dimen/elevation_header"
+        tools:ignore="UnusedAttribute,PrivateResource">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:layout_marginTop="6dp">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_double"
+                android:layout_marginRight="@dimen/spacing_double"
+                android:progressTint="?android:colorAccent"
+                tools:ignore="UnusedAttribute" />
+
+
+            <Button
+                android:id="@+id/button_solution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/progress"
+                android:background="@color/red"
+                android:minHeight="48dp"
+                android:text="Solution"
+                android:visibility="visible"/>
+
+
+            <ImageButton
+                android:id="@id/backward_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_below="@+id/progress"
+                android:layout_toStartOf="@id/forward_button"
+                android:layout_marginEnd="36dp"
+                android:background="@color/transparent"
+                android:padding="4dp"
+
+                android:scaleType="fitCenter"
+                android:src="@drawable/skip_backward"
+                android:visibility="gone" />
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:minHeight="30dp"
+                android:minWidth="8dp"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@id/forward_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_below="@+id/progress"
+                android:background="@color/transparent"
+                android:layout_toEndOf="@+id/space"
+
+                android:padding="4dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/skip_forward"
+                android:visibility="gone" />
+
+
+            <ImageButton
+                android:id="@+id/button_next"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/progress"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/spacing_double"
+                android:background="@color/transparent"
+
+                android:padding="4dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/skip_forward"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+</LinearLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".ac4_display_problem_set.DisplayQuestionActivity">
+
+
+    <AdapterViewFlipper
+        android:id="@+id/question_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+         />
+
+
+    <!-- bottom Toolbar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/progress_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:elevation="@dimen/elevation_header"
+        tools:ignore="UnusedAttribute,PrivateResource">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_double"
+                android:layout_marginRight="@dimen/spacing_double"
+                android:progressTint="?android:colorAccent"
+                tools:ignore="UnusedAttribute" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_solution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red"
+                    android:minHeight="48dp"
+                    android:text="Solution"
+                    />
+
+                <Button
+                    android:id="@+id/button_check_answer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_double"
+                    android:background="@color/red"
+                    android:minHeight="48dp"
+                    android:paddingEnd="6dp"
+                    android:paddingStart="6dp"
+                    android:text="Check Answer" />
+
+                <ImageButton
+                    android:id="@+id/backward"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="48dp"
+                    android:background="@color/transparent"
+                    android:padding="4dp"
+
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/skip_backward"
+                    android:visibility="gone" />
+
+                <ImageButton
+                    android:id="@+id/forward"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="60dp"
+                    android:background="@color/transparent"
+                    android:padding="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/skip_forward"
+                    android:visibility="gone" />
+
+                <Space
+                    android:id="@+id/space"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    android:minWidth="10dp"
+                    android:layout_weight="1"/>
+
+                <ImageButton
+                    android:id="@+id/button_next"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/transparent"
+                    android:padding="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/skip_forward"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+</LinearLayout>

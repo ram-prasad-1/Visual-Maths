@@ -1,0 +1,367 @@
+[
+  {
+    "name": "Circle",
+    "id": "circle",
+    "scores": 0,
+    "totalPS": 2,
+    "psArray": [
+      {
+        "ps_no": 1,
+        "qnArray": [
+          {
+            "type": "mcq",
+            "question": " Find area of green colored region",
+            "options": [4, 5, 6, 7],
+            "answer": 2,
+            "cvData": [
+              "mcq",
+              "haha",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "Square Area = 10 \u00D7 10 = 100",
+              "",
+
+              "2×Half Circle = 1 Full Circle",
+              "Circle Area = πr² = 78.53 ",
+               "∴ Red Shaded Area ",
+                "= 100 - 78.53 = 21.46",
+              "",
+              " Total Red area = ",
+              "21.46×2 = 42.92cm " ,
+              "∴ Green Area = 57.07 Ans."
+            ],
+            "score": 0
+          },
+          {
+            "type": "picker",
+            "question": "One (Picker) of the fattiest fishes is salmon. 4 ounces contains how many grams of fat?",
+            "options": [100, 10, 150],
+            "answer": 120,
+            "cvData": [
+              "picker",
+              "hehe",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "solu \n tion",
+              "new line happens \n sol2",
+              "solution",
+              "solution",
+              "solufsfsfsdfsdfstion",
+              "solsdfsfsghfhfdfution",
+              "sortjlonl2"
+            ],
+            "score": 0
+          }
+        ]
+      },
+      {
+        "ps_no": 2,
+        "qnArray": [
+          {
+            "type": "mcq",
+            "question": "Which country won every Olympic Men’s hockey gold medal from 1928 to 1956?",
+            "options": [
+              "App",
+              "android",
+              "Visual",
+              "fiber"
+            ],
+            "answer": 4,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "try again",
+              "not found"
+            ],
+            "score": 0
+          },
+          {
+            "type": "mcq",
+            "question": "One of the fattiest fishes is salmon. 4 ounces contains how many grams of fat?",
+            "options": [
+              "Application",
+              "android1",
+              "Visual",
+              "physics"
+            ],
+            "answer": 1,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "see later",
+              "found"
+            ],
+            "score": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Rectangle",
+    "id": "rectangle",
+    "scores": 0,
+    "totalPS": 3,
+    "psArray": [
+      {
+        "ps_no": 1,
+        "qnArray": [
+          {
+            "type": "mcq",
+            "question": " area of rectangle ??",
+            "options": [
+              "23",
+              "Blue Cheese2",
+              "Gorgonzola",
+              "wrong question"
+            ],
+            "answer": 4,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "sol",
+              "later solute"
+            ],
+            "score": 0
+          },
+          {
+            "type": "mcq",
+            "question": "One of the fattiest fishes is salmon. 4 ounces contains how many grams of fat?",
+            "options": [
+              "fsfsf",
+              "dfgdgg Cheese",
+              "dsfsfsdd",
+              "Parmesan"
+            ],
+            "answer": 4,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "solution",
+              "sol2"
+            ],
+            "score": 0
+          }
+        ]
+      },
+      {
+        "ps_no": 2,
+        "qnArray": [
+          {
+            "type": "mcq",
+            "question": "Which country won every Olympic Men’s hockey gold medal from 1928 to 1956?",
+            "options": [
+              "App",
+              "android",
+              "Visual",
+              "fiber"
+            ],
+            "answer": 3,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "try again",
+              "not found"
+            ],
+            "score": 0
+          },
+          {
+            "type": "mcq",
+            "question": "One of the fattiest fishes is salmon. 4 ounces contains how many grams of fat?",
+            "options": [
+              "Application",
+              "android1",
+              "Visual",
+              "physics"
+            ],
+            "answer": 4,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "see later",
+              "found"
+            ],
+            "score": 1
+          }
+        ]
+      },
+      {
+        "ps_no": 3,
+        "qnArray": [
+          {
+            "type": "mcq",
+            "question": "Which country won every Olympic Men’s hockey gold medal from 1928 to 1956?",
+            "options": [
+              "App",
+              "android",
+              "Visual",
+              "fiber"
+            ],
+            "answer": 3,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "try again",
+              "not found"
+            ],
+            "score": 0
+          },
+          {
+            "type": "mcq",
+            "question": "One of the fattiest fishes is salmon. 4 ounces contains how many grams of fat?",
+            "options": [
+              "Application",
+              "android1",
+              "Visual",
+              "physics"
+            ],
+            "answer": 4,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "see later",
+              "found"
+            ],
+            "score": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Percentage",
+    "id": "percent",
+    "scores": 0,
+    "totalPS": 2,
+    "psArray": [
+      {
+        "ps_no": 1,
+        "qnArray": [
+          {
+            "type": "mcq",
+            "question": "The population of a village increases from 675 to 783. Find the percentage increase.",
+            "options": [14, 15, 16, 17],
+            "answer": 3,
+            "cvData": [
+              "Population Increase = 783 - 675 = 108",
+              "Percentage Increase = x%",
+              "x = 16"
+            ],
+            "solution": [
+
+            ],
+            "score": 0
+          },
+          {
+            "type": "picker",
+            "question": "One (Picker) of the fattiest fishes is salmon. 4 ounces contains how many grams of fat?",
+            "options": [100, 10, 150],
+            "answer": 120,
+            "cvData": [
+              "picker",
+              "hehe",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "solu \n tion",
+              "new line happens \n sol2",
+              "solution",
+              "solution",
+              "solufsfsfsdfsdfstion",
+              "solsdfsfsghfhfdfution",
+              "sortjlonl2"
+            ],
+            "score": 0
+          }
+        ]
+      },
+      {
+        "ps_no": 2,
+        "qnArray": [
+          {
+            "type": "mcq",
+            "question": "Which country won every Olympic Men’s hockey gold medal from 1928 to 1956?",
+            "options": [
+              "App",
+              "android",
+              "Visual",
+              "fiber"
+            ],
+            "answer": 4,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "try again",
+              "not found"
+            ],
+            "score": 0
+          },
+          {
+            "type": "mcq",
+            "question": "One of the fattiest fishes is salmon. 4 ounces contains how many grams of fat?",
+            "options": [
+              "Application",
+              "android1",
+              "Visual",
+              "physics"
+            ],
+            "answer": 1,
+            "cvData": [
+              "Canada",
+              "Russia",
+              "India",
+              "USA"
+            ],
+            "solution": [
+              "see later",
+              "found"
+            ],
+            "score": 1
+          }
+        ]
+      }
+    ]
+  }
+
+]
