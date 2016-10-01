@@ -84,7 +84,7 @@ public class EquationViewTest extends BaseViewGroup {
 
                 MX_plus_C num = new MX_plus_C("-3", "-20");
                 MX_plus_C denm = new MX_plus_C("-100", "18");
-                FractionX f2 = new FractionX(ss.Plus_S, num, denm, 22, true);
+                FractionX f2 = new FractionX(ss.Plus_S, num, denm, 22, false);
 
                 ev.addFraction(f2);
                 break;

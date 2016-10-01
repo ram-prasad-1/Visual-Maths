@@ -112,11 +112,9 @@ public class EquationView extends View {   // minus sign -->  −
 
         operation = -9794;
 
+
         boolean isAlreadyAdded = false;
-
         int addedAtIndex = 0;
-
-
         //<editor-fold desc=".......... check if already added ............">
         int i = 0;
         if (fractionList != null) {
@@ -142,9 +140,10 @@ public class EquationView extends View {   // minus sign -->  −
         }
         //</editor-fold>
 
-        if (!isAlreadyAdded) {
+        if (fbc) { // fbc
 
-            //<editor-fold desc=".......... add fraction............">
+
+            //<editor-fold desc=".......... update fraction x values ............">
             float xi = f.isSideRight ? rectF.right : es_x_start;
             float xi_initial = xi;
 
@@ -152,7 +151,13 @@ public class EquationView extends View {   // minus sign -->  −
             if (f.isFirstOnThisSide && !isSignPlus(f.sign) && !f.isDenominator_1) {
                 xi += gtl(f.sign);
 
-            } // bug alert: add code for f.sign if f is not FF & d != 1
+            }
+
+            // NOTE: for not first fraction with d != 1
+            if (!f.isFirstOnThisSide && !f.isDenominator_1) {
+                xi += gtl(f.sign);
+
+            }
 
 
             // update fraction start
@@ -213,15 +218,12 @@ public class EquationView extends View {   // minus sign -->  −
 
 
             // save final xi
-            if (f.isSideRight) { // right
+            float increase = (xi - xi_initial);
+            rectF.right += increase;  // rf right will increase in both cases
 
-                rectF.right = xi;
-
-            } else { // left
+            if (!f.isSideRight) { // left
 
                 es_x_start = xi;
-
-                float increase = (xi - xi_initial);
 
                 if (fractionList != null) {
                     for (FractionX fr : fractionList) {
@@ -241,17 +243,127 @@ public class EquationView extends View {   // minus sign -->  −
 
                     }
                 }
-
-                rectF.right += increase;
-            }
-
-            if (fractionList == null) {
-                fractionList = new ArrayList<>(4);
             }
 
 
-            // add to fractionList
-            fractionList.add(f);
+            //</editor-fold>
+
+
+            if (!isAlreadyAdded) {
+
+                if (fractionList == null) {
+                    fractionList = new ArrayList<>(4);
+                }
+
+                // add to fractionList
+                fractionList.add(f);
+
+            }else{
+
+                fractionList.get(addedAtIndex).visibility_GONE = false; // show it
+
+            }
+
+
+        } else {  // bbc
+
+            fractionList.get(addedAtIndex).visibility_GONE = true; // hide it
+
+            //<editor-fold desc=".......... update xi for rest ............">
+            float xi = f.isSideRight ? rectF.right : es_x_start;
+            float xi_initial = xi;
+
+            // NOTE: for first fraction with d != 1; only care for fr sign if it's -ve
+            if (f.isFirstOnThisSide && !isSignPlus(f.sign) && !f.isDenominator_1) {
+                xi += gtl(f.sign);
+
+            }
+
+            // NOTE: for not first fraction with d != 1
+            if (!f.isFirstOnThisSide && !f.isDenominator_1) {
+                xi += gtl(f.sign);
+
+            }
+
+
+            // when d != 1, fraction to dikhani hi padegi
+            if (!f.isDenominator_1) {
+                xi += txtFS.Gap;
+            }
+
+            float numLength = gtl(f.num.toString());
+            float denmLength = gtl(f.denm.toString());
+
+
+            float shorterNumberStartX = Math.abs(numLength / 2f - denmLength / 2f);
+
+            // add space around leading sign or not if d_1_and_not_FF
+            boolean d_1_and_not_FF = f.isDenominator_1 && !f.isFirstOnThisSide;
+            float end1;
+            float end2;
+
+            //<editor-fold desc=".......... set xm & xc values for numerator and denominator ............">
+
+            if (numLength >= denmLength) { // numLength is longer
+
+                // numerator x values
+                end1 = f.num.set_x_Values(xi, d_1_and_not_FF);
+
+
+                xi = xi + shorterNumberStartX;
+
+                // denominator x values
+                end2 = f.denm.set_x_Values(xi, false);
+
+            } else { // denmLength is longer
+
+                // denominator x values
+                end1 = f.denm.set_x_Values(xi, false);
+
+
+                xi = xi + shorterNumberStartX;
+
+                // numerator x values
+                end2 = f.num.set_x_Values(xi, false);
+
+            }
+            //</editor-fold>
+
+            xi = Math.max(end1, end2);
+
+
+            if (!f.isDenominator_1) {
+                xi += txtFS.Gap;
+            }
+
+
+            // save final xi
+            float increase = (xi - xi_initial);
+            rectF.right -= increase; // rf right will increase in both sides
+
+            if (!f.isSideRight) { // left
+
+                es_x_start -= increase;
+                if (fractionList != null) {
+                    for (FractionX fr : fractionList) {
+
+                        if (fr.isSideRight) {
+                            // num
+                            fr.num.xm -= increase;
+                            fr.num.xc -= increase;
+
+                            // denum
+                            fr.denm.xm -= increase;
+                            fr.denm.xc -= increase;
+
+                            // fraction x start
+                            fr.xStart -= increase;
+                        }
+
+                    }
+                }
+            }
+
             //</editor-fold>
         }
 
@@ -275,7 +387,7 @@ public class EquationView extends View {   // minus sign -->  −
 
             for (FractionX f : fractionList) {
 
-//                Log.d("EquationView", "onDraw: listSize --> " + fractionList.size());
+                Log.d("EquationView", "onDraw: visibility gone --> " + f.visibility_GONE +  "  " + f.num.c);
 
                 if (!f.visibility_GONE) {
                     drawFraction(canvas, f);
@@ -293,7 +405,6 @@ public class EquationView extends View {   // minus sign -->  −
 
         // left align
         txt.paint.setTextAlign(Paint.Align.LEFT);
-
 
 
         if (!f.isDenominator_1) { // denominator != 1
@@ -372,8 +483,22 @@ public class EquationView extends View {   // minus sign -->  −
             c.drawLine(xStart, rectF.centerY(), xEnd + txtFS.Gap, rectF.centerY(), txt.paint);
             //</editor-fold>
 
+            //<editor-fold desc=".......... f.sign ............">
+            // sign considerations: only draw if
+            // 1. if FF, -ve fr sign & d != 1   OR     2. if !FF & d != 1
+            if (f.isFirstOnThisSide && !isSignPlus(f.sign) && !f.isDenominator_1
+                    || (!f.isFirstOnThisSide && !f.isDenominator_1)) {
+
+                float signStartX = f.xStart - gtl(f.sign);
+                c.drawText(f.sign, signStartX, txtCenterY, txt.paint);
+
+            }
+            //</editor-fold>
+
 
         } else { // denominator = 1
+
+            // NOTE: no use of fraction sign if d = 1
 
             //<editor-fold desc=".......... if d == 1, only draw numerator ............">
             if (!f.num.m.equals("0")) {
