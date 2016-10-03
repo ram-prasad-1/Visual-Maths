@@ -25,10 +25,6 @@ public class EquationView extends View {   // minus sign -->  −
 
     public String equalSign = " = ";
 
-    // equal sign position from left
-    // ie if 4 frs on left so equalSign position = 4
-    public int es_position;
-
     public float es_x_start; // start coordinate of equal sign
     public float es_dx; // dx in equal sign
     public float es_length; // equal sign length
@@ -379,15 +375,13 @@ public class EquationView extends View {   // minus sign -->  −
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawRect(rectF, paint);
 
-        temp1.x = es_x_start;
+        temp1.x = es_x_start + es_dx;
         temp1.y = txtCenterY;
         txt.draw(canvas, equalSign, temp1, 0, 0, 0);
 
         if (fractionList != null) {
 
             for (FractionX f : fractionList) {
-
-                Log.d("EquationView", "onDraw: visibility gone --> " + f.visibility_GONE +  "  " + f.num.c);
 
                 if (!f.visibility_GONE) {
                     drawFraction(canvas, f);
