@@ -23,7 +23,7 @@ public class EquationViewTest extends BaseViewGroup {
         super(context);
 
 
-        p1.x = 30;
+        p1.x = 100;
         p1.y = 300;
 
         p2.x = 700;
@@ -75,24 +75,45 @@ public class EquationViewTest extends BaseViewGroup {
 
             case 1:
 
-                FractionX f1 = new FractionX("141", 11, false);
+                MX_plus_C num1 = new MX_plus_C("3", "20");
+                MX_plus_C denm1 = new MX_plus_C("24", "0");
 
+                FractionX f1 = new FractionX(ss.Plus_S, num1, denm1, 11, false);
                 ev.addFraction(f1);
+
+                MX_plus_C num01 = new MX_plus_C("11", "0");
+                MX_plus_C denm01 = new MX_plus_C("10", "0");
+
+                FractionX f01 = new FractionX(ss.Plus_S, num01, denm01, 110, false);
+                ev.addFraction(f01);
+
                 break;
 
             case 2:
 
-                MX_plus_C num = new MX_plus_C("-3", "-20");
+                p2.x = 200;
+                p2.y = 500;
+                ev.createLcmFraction(2, p2, 4234, false, true);
+
+             /*   MX_plus_C num = new MX_plus_C("-3", "-20");
                 MX_plus_C denm = new MX_plus_C("-100", "18");
                 FractionX f2 = new FractionX(ss.Plus_S, num, denm, 22, false);
 
-                ev.addFraction(f2);
+                ev.addFraction(f2);*/
+
+              /*  FractionX f2 = new FractionX("-25", "-14", 33, true);
+
+                ev.addFraction(f2);*/
                 break;
 
             case 3:
-                FractionX f3 = new FractionX("-25", "-14", 33, false);
+                /*FractionX f3 = new FractionX("-25", "-14", 33, false);
 
-                ev.addFraction(f3);
+                ev.addFraction(f3);*/
+
+                p2.x = 200;
+                p2.y = 500;
+                ev.createLcmFraction(2, p2, 4234, false, false);
                 break;
 
             case 4:

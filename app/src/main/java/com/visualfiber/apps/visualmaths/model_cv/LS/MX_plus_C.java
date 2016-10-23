@@ -1,6 +1,8 @@
 package com.visualfiber.apps.visualmaths.model_cv.LS;
 
 
+import android.util.Log;
+
 import com.visualfiber.apps.visualmaths.utils.ss;
 import com.visualfiber.apps.visualmaths.utils.txt.txt;
 
@@ -47,6 +49,16 @@ public class MX_plus_C {
 
         c = Integer.toString(cc);
 
+    }
+
+    public MX_plus_C(MX_plus_C mx_plus_c){
+
+        m = mx_plus_c.m;
+        c = mx_plus_c.c;
+
+        ipm = mx_plus_c.ipm;
+        ipc = mx_plus_c.ipc;
+        isOrderReverse = mx_plus_c.isOrderReverse;
     }
 
     // also updates ipm
@@ -123,18 +135,56 @@ public class MX_plus_C {
         // assign value to xc
         xc = xi;
 
-//        Log.d("MX_plus_C", "set_x_Values: xm --> " + xm + "  xc --> " + xc);
+        Log.d("MX_plus_C", "set_x_Values: xm --> " + xm + "  xc --> " + xc);
 
         // reupdate xi
-        float lengthC = gtl(c);
+        float lengthC = c.equals("0")? 0 : gtl(c);
         xi += lengthC;
 
         return xi; // now xi is updated final xi
     }
 
 
+    // copy values from another object
+    public void copyValues(MX_plus_C copyFrom){
 
-    // NOTE: USE THIS TO_STRING VALUE IF denominator != 1
+        m = copyFrom.m;
+        c = copyFrom.c;
+
+        isOrderReverse = copyFrom.isOrderReverse;
+        ipm = copyFrom.ipm;
+        ipc = copyFrom.ipc;
+
+
+        xm = copyFrom.xm;
+        xc = copyFrom.xc;
+
+        dxc = copyFrom.dxc;
+        dxm = copyFrom.dxm;
+        dxx = copyFrom.dxx;
+
+    }
+
+    // multiply this mx + c with a number
+    public void multiplyWithInt(int multiplier){
+
+        m = Integer.toString(Integer.parseInt(m) * multiplier);
+        c = Integer.toString(Integer.parseInt(c) * multiplier);
+
+        boolean ipMultiplier = multiplier >= 0;
+
+        ipm = ipm == ipMultiplier;
+        ipc = ipc == ipMultiplier;
+
+    }
+
+    // m & c both non zero
+    public boolean bothNonZero(){
+
+        return !m.equals("0") && !c.equals("0");
+    }
+
+    // NOTE: USE THIS TO_STRING VALUE ONLY IF denominator != 1
     @Override
     public String toString() {
 

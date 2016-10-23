@@ -20,7 +20,6 @@ public class FractionX {
 
     public boolean isDenominator_1; // if d == 1 (to draw FrNum at center)
 
-    public boolean isBroken; // is fraction broken
 
     // start coordinate of fraction
     public float xStart;
@@ -68,6 +67,19 @@ public class FractionX {
         this.sign = sign;
     }
 
+
+    protected FractionX (){}
+
+    public void copyValues(FractionX copyFrom){
+
+        xStart = copyFrom.xStart;
+        gapExtra = copyFrom.gapExtra;
+        visibility_GONE = copyFrom.visibility_GONE;
+        isSideRight = copyFrom.isSideRight;
+        isFirstOnThisSide = copyFrom.isFirstOnThisSide;
+        isDenominator_1 = copyFrom.isDenominator_1;
+
+    }
 
     // d == 1 && (Numerator m or c == 0)
     public boolean isSingle() {

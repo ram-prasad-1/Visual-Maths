@@ -58,6 +58,7 @@ public class QuestionAdapter extends zBaseQuestionAdapter {
             case 1:
 
                 if (qNo == 1) return new EquationViewTest(context);
+
 //                if (qNo == 1) return new Percent02(context);
                 if (qNo == 2) return new Percent01(context);
 
