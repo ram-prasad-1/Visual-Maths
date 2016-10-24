@@ -13,13 +13,13 @@ public class LcmFractionX extends FractionX {
     public int lcmQuotient;
 
     // holds values of lcm fraction
-    public MX_plus_C lcmFrNum;
-    public MX_plus_C lcmFrDenm;
+    public MX_plus_C lcmNum;
+    public MX_plus_C lcmDenm;
 
     public LcmFractionX(String fSign, MX_plus_C N, MX_plus_C D, int LcmQuotient, int uniqueID) {
 
-        lcmFrNum = N;
-        lcmFrDenm = D;
+        lcmNum = N;
+        lcmDenm = D;
 
         this.uniqueID = uniqueID;
         this.lcmQuotient = LcmQuotient;

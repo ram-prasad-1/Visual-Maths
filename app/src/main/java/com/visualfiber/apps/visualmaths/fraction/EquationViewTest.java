@@ -91,7 +91,7 @@ public class EquationViewTest extends BaseViewGroup {
 
             case 2:
 
-                p2.x = 200;
+                p2.x = -30;
                 p2.y = 500;
                 ev.createLcmFraction(2, p2, 4234, false, true);
 
@@ -111,8 +111,6 @@ public class EquationViewTest extends BaseViewGroup {
 
                 ev.addFraction(f3);*/
 
-                p2.x = 200;
-                p2.y = 500;
                 ev.createLcmFraction(2, p2, 4234, false, false);
                 break;
 

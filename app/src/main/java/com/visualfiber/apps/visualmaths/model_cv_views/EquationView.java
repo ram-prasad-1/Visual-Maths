@@ -68,6 +68,7 @@ public class EquationView extends View {   // minus sign -->  −
     // reusable per method, must not be hacked
     private boolean cmBoolean; // common Boolean
     private boolean animEnd;
+    private boolean isPart1;
 
     private int cmInt;
     private int cmInt2;
@@ -654,7 +655,7 @@ public class EquationView extends View {   // minus sign -->  −
                 // copy original values
                 lcmf.num.copyValues(f.num);
                 lcmf.denm.copyValues(f.denm);
-                lcmf.copyValues(f);
+                lcmf.copyValues(f); // note
                 Log.d("EquationView", "createLcmFraction: numLcm --> " + numLcmFr.toString());
                 Log.d("EquationView", "createLcmFraction: DenumLcm --> " + denmLcmFr.toString());
 
@@ -663,9 +664,13 @@ public class EquationView extends View {   // minus sign -->  −
 
         }
 
+        this.isPart1 = isPart1;
+
         if (isPart1) {
+
             animFloat.start();
         } else {
+
 
             animatedFraction = 1;
 
@@ -704,7 +709,7 @@ public class EquationView extends View {   // minus sign -->  −
             for (FractionX f : fractionList) {
 
                 if (!f.visibility_GONE) {
-                    drawFraction(canvas, f);
+                    drawFraction(canvas, f, rectF.top);
                 }
             }
 
@@ -714,127 +719,43 @@ public class EquationView extends View {   // minus sign -->  −
 
     private void draw_createLcmFraction(Canvas c) {
 
-        float a1 = animatedFraction < 0.7f? 1.428571429f * animatedFraction : 1;
+        float a1 = animatedFraction < 0.7f ? 1.428571429f * animatedFraction : 1;
 
 
         float dx = (cmPointF.x - lcmFractionList.get(0).xStart) * a1;
         float dy = (cmPointF.y - rectF.top) * a1;
 
         float dGap = 0;
+        float xEnd = 0;
 
-        Log.d("EquationView", "draw_createLcmFraction: xStart --> " + lcmFractionList.get(0).xStart);
-
-
+        //<editor-fold desc=".......... for loop to draw given fractions + lcmQuotient fraction ............">
         for (LcmFractionX f : lcmFractionList) {
 
-            float xStart = f.num.dxm = f.num.dxc = f.denm.dxm = f.denm.dxc = dx + dGap * a1;
-
-            float xEnd;
-
+            // NOTE: gap and displacement in x values is included in dxm/dxc values
+            f.num.dxm = f.num.dxc = f.denm.dxm = f.denm.dxc = dx + dGap * a1;
 
             if (!f.isDenominator_1) { // denominator != 1
 
-                //<editor-fold desc=".......... numerator ............">
-                if (!f.num.m.equals("0")) {
 
-                    // - ve sign
-                    if (!f.num.ipm) {
-                        c.drawText(ss.Minus, f.num.xm + f.num.dxm - gtl(ss.Minus), rectF.top + maxTxtHeight + dy, txt.paint);
-                    }
-
-                    // m
-                    c.drawText(f.num.m, f.num.xm + f.num.dxm, rectF.top + maxTxtHeight + dy, txt.paint);
-
-                    // x
-                    c.drawText(f.num.x, f.num.xm + f.num.dxm + f.num.dxx, rectF.top + maxTxtHeight + dy, txt.paint);
-                }
-
-
-                if (!f.num.c.equals("0")) {
-
-                    // c sign
-                    String minusC = f.num.m.equals("0") ? ss.Minus : ss.Minus_S; // m == 0 ho to no space
-                    String sign = f.num.ipc ? ss.Plus_S : minusC;
-
-                    if (!(f.num.m.equals("0") && f.num.ipc)) { // do not draw sign if m = 0 & c +ve
-                        c.drawText(sign, f.num.xc + f.num.dxc - gtl(sign), rectF.top + maxTxtHeight + dy, txt.paint);
-                    }
-
-                    // c
-                    c.drawText(f.num.c, f.num.xc + f.num.dxc, rectF.top + maxTxtHeight + dy, txt.paint);
-
-
-                }
-                //</editor-fold>
-
-
-                //<editor-fold desc=".......... denominator ............">
-                if (!f.denm.m.equals("0")) {
-
-                    // - ve sign
-                    if (!f.denm.ipm) {
-                        c.drawText(ss.Minus, f.denm.xm + f.denm.dxm - gtl(ss.Minus), rectF.bottom + dy, txt.paint);
-                    }
-
-                    // m
-                    c.drawText(f.denm.m, f.denm.xm + f.denm.dxm, rectF.bottom + dy, txt.paint);
-
-                    // x
-                    c.drawText(f.denm.x, f.denm.xm + f.denm.dxm + f.denm.dxx, rectF.bottom + dy, txt.paint);
-                }
-
-                if (!f.denm.c.equals("0")) {
-
-                    // c sign
-                    String minusC = f.denm.m.equals("0") ? ss.Minus : ss.Minus_S; // m == 0 ho to no space
-                    String sign = f.denm.ipc ? ss.Plus_S : minusC;
-
-                    if (!(f.denm.m.equals("0") && f.denm.ipc)) { // do not draw sign if m = 0 & c +ve
-                        c.drawText(sign, f.denm.xc + f.denm.dxc - gtl(sign), rectF.bottom + dy, txt.paint);
-                    }
-
-                    // c
-                    c.drawText(f.denm.c, f.denm.xc + f.denm.dxc, rectF.bottom + dy, txt.paint);
-                }
-                //</editor-fold>
-
-
-                //<editor-fold desc=".......... divider line ............">
-
-                 xStart += f.xStart;
-
-                float lengthC_num = f.num.c.equals("0")? 0: gtl(f.num.c);
-                float lengthC_denm = f.denm.c.equals("0")? 0: gtl(f.denm.c);
+                float lengthC_num = f.num.c.equals("0") ? 0 : gtl(f.num.c);
+                float lengthC_denm = f.denm.c.equals("0") ? 0 : gtl(f.denm.c);
 
                 xEnd = Math.max(f.num.xc + f.num.dxc + lengthC_num,
                         f.denm.xc + f.denm.dxc + lengthC_denm);
                 xEnd += txtFS.Gap;
 
-                c.drawLine(xStart , rectF.centerY() + dy, xEnd, rectF.centerY() + dy, txt.paint);
-                //</editor-fold>
-
-                //<editor-fold desc=".......... f.sign ............">
-                // sign considerations: only draw if
-                // 1. if FF, -ve fr sign & d != 1   OR     2. if !FF & d != 1
-                if (f.isFirstOnThisSide && !isSignPlus(f.sign) && !f.isDenominator_1
-                        || (!f.isFirstOnThisSide && !f.isDenominator_1)) {
-
-                    float signStartX = xStart - gtl(f.sign);
-                    c.drawText(f.sign, signStartX, txtCenterY + dy, txt.paint);
-
-                }
-                //</editor-fold>
+                drawFraction(c, f, rectF.top + dy);
 
 
                 //<editor-fold desc=".......... lcm Quotient fraction ............">
 
                 if (animatedFraction > 0.996f) {
-                    c.drawText(ss.MultiSign_S, xEnd , txtCenterY + dy, txt.paint);
+                    c.drawText(ss.MultiSign_S, xEnd, txtCenterY + dy, txt.paint);
 
                     String lcmQ = Integer.toString(f.lcmQuotient);
                     temp1.x = xEnd + gtl(ss.MultiSign_S);
                     temp1.y = rectF.centerY() + dy;
-                    txtFS.drawFraction(c,lcmQ, lcmQ, temp1, 0);
+                    txtFS.drawFraction(c, lcmQ, lcmQ, temp1, 0);
                     txt.paint.setTextAlign(Paint.Align.LEFT); // do not forget to reset the text alignment
                 }
                 //</editor-fold>
@@ -898,13 +819,201 @@ public class EquationView extends View {   // minus sign -->  −
 
             }
 
-
+            // increase the gap required
             dGap += f.getAdditionalGaprequired();
+        }
+        //</editor-fold>
+
+
+        if (!isPart1) {
+
+            // xEnd + gap for last lcmQuotient fraction
+            float xi = xEnd + lcmFractionList.get(lcmFractionList.size()-1).getAdditionalGaprequired();
+
+            float yTop = rectF.top + dy;
+
+            // equal sign
+            c.drawText(" = ", xi, txtCenterY + dy, txt.paint);
+            xi += gtl(" = ");
+
+
+            //<editor-fold desc=".......... for loop to draw final lcm fractions ............">
+            for (LcmFractionX f : lcmFractionList) {
+
+
+
+                //<editor-fold desc=".......... setting x values (copied from addfraction method) ............">
+
+                // NOTE: for first fraction with d != 1; only care for fr sign if it's -ve
+                if (f.isFirstOnThisSide && !isSignPlus(f.sign) && !f.isDenominator_1) {
+                    xi += gtl(f.sign);
+
+                }
+
+                // NOTE: for not first fraction with d != 1
+                if (!f.isFirstOnThisSide && !f.isDenominator_1) {
+                    xi += gtl(f.sign);
+
+                }
+
+                // used in drawing divider line
+                float xiDivL = xi;
+
+                // when d != 1, fraction to dikhani hi padegi
+                if (!f.isDenominator_1) {
+                    xi += txtFS.Gap;
+                }
+
+                float numLength = gtl(f.lcmNum.toString());
+                float denmLength = gtl(f.lcmDenm.toString());
+
+
+                float shorterNumberStartX = Math.abs(numLength / 2f - denmLength / 2f);
+
+                // add space around leading sign or not if d_1_and_not_FF
+                boolean d_1_and_not_FF = f.isDenominator_1 && !f.isFirstOnThisSide;
+                float end1;
+                float end2;
+
+                //<editor-fold desc=".......... set xm & xc values for numerator and denominator ............">
+
+                if (numLength >= denmLength) { // numLength is longer
+
+                    // numerator x values
+                    end1 = f.lcmNum.set_x_Values(xi, d_1_and_not_FF);
+
+
+                    xi = xi + shorterNumberStartX;
+
+                    // denominator x values
+                    end2 = f.lcmDenm.set_x_Values(xi, false);
+
+                } else { // denmLength is longer
+
+                    // denominator x values
+                    end1 = f.lcmDenm.set_x_Values(xi, false);
+
+
+                    xi = xi + shorterNumberStartX;
+
+                    // numerator x values
+                    end2 = f.lcmNum.set_x_Values(xi, false);
+
+                }
+                //</editor-fold>
+
+                xi = Math.max(end1, end2);
+
+
+                if (!f.isDenominator_1) {
+                    xi += txtFS.Gap;
+                }
+                //</editor-fold>
+
+                //<editor-fold desc=".......... numerator ............">
+                if (!f.num.m.equals("0")) {
+
+                    // - ve sign
+                    if (!f.num.ipm) {
+                        c.drawText(ss.Minus, f.lcmNum.xm + f.lcmNum.dxm - gtl(ss.Minus), yTop + maxTxtHeight, txt.paint);
+                    }
+
+                    // m
+                    c.drawText(f.lcmNum.m, f.lcmNum.xm + f.lcmNum.dxm, yTop + maxTxtHeight, txt.paint);
+
+                    // x
+                    c.drawText(f.lcmNum.x, f.lcmNum.xm + f.lcmNum.dxm + f.lcmNum.dxx, yTop + maxTxtHeight, txt.paint);
+                }
+
+
+                if (!f.num.c.equals("0")) {
+
+                    // c sign
+                    String minusC = f.lcmNum.m.equals("0") ? ss.Minus : ss.Minus_S; // m == 0 ho to no space
+                    String sign = f.lcmNum.ipc ? ss.Plus_S : minusC;
+
+                    if (!(f.lcmNum.m.equals("0") && f.lcmNum.ipc)) { // do not draw sign if m = 0 & c +ve
+                        c.drawText(sign, f.lcmNum.xc + f.lcmNum.dxc - gtl(sign), yTop + maxTxtHeight, txt.paint);
+                    }
+
+                    // c
+                    c.drawText(f.lcmNum.c, f.lcmNum.xc + f.lcmNum.dxc, yTop + maxTxtHeight, txt.paint);
+
+
+                }
+                //</editor-fold>
+
+
+                //<editor-fold desc=".......... denominator ............">
+                if (!f.lcmDenm.m.equals("0")) {
+
+                    // - ve sign
+                    if (!f.lcmDenm.ipm) {
+                        c.drawText(ss.Minus, f.lcmDenm.xm + f.lcmDenm.dxm - gtl(ss.Minus), yTop + rectF.height(), txt.paint);
+                    }
+
+                    // m
+                    c.drawText(f.lcmDenm.m, f.lcmDenm.xm + f.lcmDenm.dxm, yTop + rectF.height(), txt.paint);
+
+                    // x
+                    c.drawText(f.lcmDenm.x, f.lcmDenm.xm + f.lcmDenm.dxm + f.lcmDenm.dxx, yTop + rectF.height(), txt.paint);
+                }
+
+                if (!f.lcmDenm.c.equals("0")) {
+
+                    // c sign
+                    String minusC = f.lcmDenm.m.equals("0") ? ss.Minus : ss.Minus_S; // m == 0 ho to no space
+                    String sign = f.lcmDenm.ipc ? ss.Plus_S : minusC;
+
+                    if (!(f.lcmDenm.m.equals("0") && f.lcmDenm.ipc)) { // do not draw sign if m = 0 & c +ve
+                        c.drawText(sign, f.lcmDenm.xc + f.lcmDenm.dxc - gtl(sign), yTop + rectF.height(), txt.paint);
+                    }
+
+                    // c
+                    c.drawText(f.lcmDenm.c, f.lcmDenm.xc + f.lcmDenm.dxc, yTop + rectF.height(), txt.paint);
+                }
+                //</editor-fold>
+
+
+                //<editor-fold desc=".......... divider line ............">
+
+
+                float lengthC_num = f.lcmNum.c.equals("0") ? 0 : gtl(f.lcmNum.c);
+                float lengthC_denm = f.lcmDenm.c.equals("0") ? 0 : gtl(f.lcmDenm.c);
+
+                float xEndNew = Math.max(f.lcmNum.xc + f.lcmNum.dxc + lengthC_num,
+                        f.lcmDenm.xc + f.lcmDenm.dxc + lengthC_denm);
+                xEndNew += txtFS.Gap;
+
+                Log.d("EquationView", "draw_createLcmFraction: fXstart --> " + f.xStart + "  dx  "+ dx + "  xEnd  "+ xEndNew);
+
+
+                c.drawLine(xiDivL, yTop + rectF.height()/2f, xEndNew, yTop + rectF.height()/2f, txt.paint);
+
+
+                //</editor-fold>
+
+                //<editor-fold desc=".......... f.sign ............">
+                // sign considerations: only draw if
+                // 1. if FF, -ve fr sign & d != 1   OR     2. if !FF & d != 1
+                if (f.isFirstOnThisSide && !isSignPlus(f.sign) && !f.isDenominator_1
+                        || (!f.isFirstOnThisSide && !f.isDenominator_1)) {
+
+                    float signStartX = xiDivL - gtl(f.sign);
+                    c.drawText(f.sign, signStartX, yTop + rectF.height()/2f + maxTxtHeight/2f -2, txt.paint);
+
+                }
+                //</editor-fold>
+
+            }
+            //</editor-fold>
+
         }
 
     }
 
-    private void drawFraction(Canvas c, FractionX f) {
+    // yTop --> top Y coordinate of equation view
+    private void drawFraction(Canvas c, FractionX f, float yTop) {
 
 
         if (!f.isDenominator_1) { // denominator != 1
@@ -914,14 +1023,14 @@ public class EquationView extends View {   // minus sign -->  −
 
                 // - ve sign
                 if (!f.num.ipm) {
-                    c.drawText(ss.Minus, f.num.xm + f.num.dxm - gtl(ss.Minus), rectF.top + maxTxtHeight, txt.paint);
+                    c.drawText(ss.Minus, f.num.xm + f.num.dxm - gtl(ss.Minus), yTop + maxTxtHeight, txt.paint);
                 }
 
                 // m
-                c.drawText(f.num.m, f.num.xm + f.num.dxm, rectF.top + maxTxtHeight, txt.paint);
+                c.drawText(f.num.m, f.num.xm + f.num.dxm, yTop + maxTxtHeight, txt.paint);
 
                 // x
-                c.drawText(f.num.x, f.num.xm + f.num.dxm + f.num.dxx, rectF.top + maxTxtHeight, txt.paint);
+                c.drawText(f.num.x, f.num.xm + f.num.dxm + f.num.dxx, yTop + maxTxtHeight, txt.paint);
             }
 
 
@@ -932,11 +1041,11 @@ public class EquationView extends View {   // minus sign -->  −
                 String sign = f.num.ipc ? ss.Plus_S : minusC;
 
                 if (!(f.num.m.equals("0") && f.num.ipc)) { // do not draw sign if m = 0 & c +ve
-                    c.drawText(sign, f.num.xc + f.num.dxc - gtl(sign), rectF.top + maxTxtHeight, txt.paint);
+                    c.drawText(sign, f.num.xc + f.num.dxc - gtl(sign), yTop + maxTxtHeight, txt.paint);
                 }
 
                 // c
-                c.drawText(f.num.c, f.num.xc + f.num.dxc, rectF.top + maxTxtHeight, txt.paint);
+                c.drawText(f.num.c, f.num.xc + f.num.dxc, yTop + maxTxtHeight, txt.paint);
 
 
             }
@@ -948,14 +1057,14 @@ public class EquationView extends View {   // minus sign -->  −
 
                 // - ve sign
                 if (!f.denm.ipm) {
-                    c.drawText(ss.Minus, f.denm.xm + f.denm.dxm - gtl(ss.Minus), rectF.bottom, txt.paint);
+                    c.drawText(ss.Minus, f.denm.xm + f.denm.dxm - gtl(ss.Minus), yTop + rectF.height(), txt.paint);
                 }
 
                 // m
-                c.drawText(f.denm.m, f.denm.xm + f.denm.dxm, rectF.bottom, txt.paint);
+                c.drawText(f.denm.m, f.denm.xm + f.denm.dxm, yTop + rectF.height(), txt.paint);
 
                 // x
-                c.drawText(f.denm.x, f.denm.xm + f.denm.dxm + f.denm.dxx, rectF.bottom, txt.paint);
+                c.drawText(f.denm.x, f.denm.xm + f.denm.dxm + f.denm.dxx, yTop + rectF.height(), txt.paint);
             }
 
             if (!f.denm.c.equals("0")) {
@@ -965,11 +1074,11 @@ public class EquationView extends View {   // minus sign -->  −
                 String sign = f.denm.ipc ? ss.Plus_S : minusC;
 
                 if (!(f.denm.m.equals("0") && f.denm.ipc)) { // do not draw sign if m = 0 & c +ve
-                    c.drawText(sign, f.denm.xc + f.denm.dxc - gtl(sign), rectF.bottom, txt.paint);
+                    c.drawText(sign, f.denm.xc + f.denm.dxc - gtl(sign), yTop + rectF.height(), txt.paint);
                 }
 
                 // c
-                c.drawText(f.denm.c, f.denm.xc + f.denm.dxc, rectF.bottom, txt.paint);
+                c.drawText(f.denm.c, f.denm.xc + f.denm.dxc, yTop + rectF.height(), txt.paint);
             }
             //</editor-fold>
 
@@ -978,13 +1087,15 @@ public class EquationView extends View {   // minus sign -->  −
 
             float xStart = f.xStart;
 
-            float lengthC_num = f.num.c.equals("0")? 0: gtl(f.num.c);
-            float lengthC_denm = f.denm.c.equals("0")? 0: gtl(f.denm.c);
+            float lengthC_num = f.num.c.equals("0") ? 0 : gtl(f.num.c);
+            float lengthC_denm = f.denm.c.equals("0") ? 0 : gtl(f.denm.c);
 
             float xEnd = Math.max(f.num.xc + f.num.dxc + lengthC_num,
                     f.denm.xc + f.denm.dxc + lengthC_denm);
+            xEnd += txtFS.Gap;
 
-            c.drawLine(xStart, rectF.centerY(), xEnd + txtFS.Gap, rectF.centerY(), txt.paint);
+            // assuming dx in divider line will be same as dxm, same for fr sign too
+            c.drawLine(xStart + f.num.dxm, yTop + rectF.height()/2f, xEnd, yTop + rectF.height()/2f, txt.paint);
             //</editor-fold>
 
             //<editor-fold desc=".......... f.sign ............">
@@ -993,14 +1104,16 @@ public class EquationView extends View {   // minus sign -->  −
             if (f.isFirstOnThisSide && !isSignPlus(f.sign) && !f.isDenominator_1
                     || (!f.isFirstOnThisSide && !f.isDenominator_1)) {
 
-                float signStartX = f.xStart - gtl(f.sign);
-                c.drawText(f.sign, signStartX, txtCenterY, txt.paint);
+                float signStartX = f.xStart + f.num.dxm - gtl(f.sign);
+                c.drawText(f.sign, signStartX, yTop + rectF.height()/2f + maxTxtHeight/2f -2, txt.paint);
 
             }
             //</editor-fold>
 
 
         } else { // denominator = 1
+
+            float centerYForText = yTop + rectF.height()/2f + maxTxtHeight/2f -2;
 
             // NOTE: no use of fraction sign if d = 1
 
@@ -1012,15 +1125,15 @@ public class EquationView extends View {   // minus sign -->  −
                 String sign = f.num.ipm ? ss.Plus_S : minusM; //
 
                 if (!(f.isFirstOnThisSide && f.num.ipm)) {  // do not draw sign if it is first fraction with m +ve
-                    c.drawText(sign, f.num.xm + f.num.dxm - gtl(sign), txtCenterY, txt.paint);
+                    c.drawText(sign, f.num.xm + f.num.dxm - gtl(sign), centerYForText, txt.paint);
                 }
 
 
                 // m
-                c.drawText(f.num.m, f.num.xm + f.num.dxm, txtCenterY, txt.paint);
+                c.drawText(f.num.m, f.num.xm + f.num.dxm, centerYForText, txt.paint);
 
                 // x
-                c.drawText(f.num.x, f.num.xm + f.num.dxm + f.num.dxx, txtCenterY, txt.paint);
+                c.drawText(f.num.x, f.num.xm + f.num.dxm + f.num.dxx, centerYForText, txt.paint);
 
             }
 
